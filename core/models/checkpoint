@@ -1,0 +1,2 @@
+model_checkpoint_path: "/mnt/hgfs/Project/local_repository/jd-edge/hed/models/hed-model-0"
+all_model_checkpoint_paths: "/mnt/hgfs/Project/local_repository/jd-edge/hed/models/hed-model-0"

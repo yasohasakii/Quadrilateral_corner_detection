@@ -1,0 +1,62 @@
+# Before you do anything please set download_path
+# or the location where you have downloaded the rar_file
+# snapshot for now : /nas2/harsimrat/hed-testing-deconv-hist-4/models/hed-model-5000
+rar_file: '.'
+# location where HED-BSDS.tar would be downloaded and decompressed (Should already exist)
+download_path: '/mnt/hgfs/Project/local_repository/jd-edge'
+# location of snapshot and tensorbaord summary events (Should already exist)
+save_dir: /mnt/hgfs/Project/local_repository/jd-edge/hed
+# location where to put the generated edgemaps during testing (Should already exist)
+test_output: /mnt/hgfs/Project/local_repository/jd-edge/hed/test/eval_result
+# parameters from the paper
+model_weights_path: None
+# training batch size, decide with your GPU size
+batch_size_train: 1
+# validation batch size, ran every val_interval
+batch_size_val: 1
+# split 30k training images for trainig/validation
+train_split: 0.8
+# maximum iterations to run epoc == 30k/batch_size
+max_iterations: 50000
+# optimizer params (not used currently Adam is used by defailt)
+optimizer: 'adam'
+optimizer_params:
+    learning_rate: 0.001
+    weight_decay: 0.0002
+# Section 4.1 Loss for layer fusion
+loss_weights: 1.0
+# save snapshot every save_interval iterations
+save_interval: 2
+# validate on held out dataset
+val_interval: 2
+# learning rate decay (Not used with Adam currently)
+learning_rate_decay: 0.1
+# Apply weighted_cross_entropy_loss to outputs from each side layer
+# Setting to false only loss after last conv layer is computed
+deep_supervision: True
+# Targets are continous if True else binary {0, 1}
+target_regression: True
+# Mean pixel value to subtract from BGR image
+mean_pixel_value: [147.7200, 137.4761, 128.8034]
+# RGB to BGR (VGG-16 trained with BGR blame OpenCV)
+channel_swap: [2, 1, 0]
+# training/validationv data
+training:
+    dir: IDCards
+    list: IDCards/wild_train_pair.lst
+    #
+    image_width: 512
+    image_height: 512
+    n_channels: 3
+# testing data
+testing:
+    dir: IDCards
+    list: IDCards/test.lst
+    #
+    image_width: 512
+    image_height: 512
+    n_channels: 3
+# use snapshot after test_snapshot intervals for testing
+test_snapshot: 2
+# Apply testing_threshold after sigmoid to generate binary maps set to 0.0 for continous valued edge maps
+testing_threshold: 0.0
